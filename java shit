@@ -1,0 +1,38 @@
+function analyzeFunction() {
+    var functionInput = document.getElementById("functionInput").value;
+
+    try {
+        // Compile the expression using Math.js
+        const node = math.parse(functionInput);
+        const code = node.compile();
+
+        // Example: Generate x and y values
+        let xValues = [];
+        let yValues = [];
+        for (let x = -10; x <= 10; x += 0.5) {
+            xValues.push(x);
+            // Evaluate the function using Math.js
+            try {
+                yValues.push(code.evaluate({ x: x })); // Pass x as a variable
+            } catch (error) {
+                console.error("Error evaluating function at x =", x, error);
+                yValues.push(NaN); // Handle errors by plotting NaN
+            }
+        }
+      // Basic domain/range (improve this!)
+        let domain = "(-∞, ∞)";
+        let range = "Unknown"; //  Difficult to determine automatically
+
+        document.getElementById("domainOutput").innerText = "Domain: " + domain;
+        document.getElementById("rangeOutput").innerText = "Range: " + range;
+
+        // Create the chart (using the Chart.js code from the previous example)
+        new Chart("graphCanvas", {  // ... (rest of the Chart.js code) ...
+        });
+
+
+    } catch (error) {
+        alert("Invalid function: " + error);
+        console.error("Function parsing error:", error);
+    }
+}
